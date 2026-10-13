@@ -16,7 +16,12 @@ let OR    = \b1 b2 -> ITE b1 TRUE b2
 
 eval not_false :
   NOT FALSE
-  -- (a) fill in your reductions here
+  =d> (\b x y -> b y x) FALSE
+  =b> \x y -> FALSE y x
+  =d> \x y -> (\x y -> y) y x
+  =a> \x y -> (\a c -> c) y x
+  =b> \x y -> (\c -> c) x
+  =b> \x y -> x
   =d> TRUE
 
 eval and_false_true:
