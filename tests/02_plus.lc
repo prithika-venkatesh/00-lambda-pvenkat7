@@ -18,15 +18,41 @@ let MUL   = \n m -> n (ADD m) ZERO
 -------------------------------------------------------------------------------
 eval incr_one :
   INCR ONE
-  -- (a) fill in your reductions here
+  =d> (\n f x -> f (n f x)) ONE
+  =b> \f x -> f (ONE f x)
+  =d> \f x -> f ((\f x -> f x) f x)
+  =a> \f x -> f ((\g y -> g y) f x)
+  =b> \f x -> f ((\y -> f y) x)
+  =b> \f x -> f (f x)
   =d> TWO
 
 eval add_one_zero :
   ADD ONE ZERO
-  -- (b) fill in your reductions here
+  =d> (\n m -> n INCR m) ONE ZERO
+  =b> (\m -> ONE INCR m) ZERO
+  =b> ONE INCR ZERO
+  =d> (\f x -> f x) INCR ZERO
+  =b> (\x -> INCR x) ZERO
+  =b> INCR ZERO
+  =d> (\n f x -> f (n f x)) ZERO
+  =b> \f x -> f (ZERO f x)
+  =d> \f x -> f ((\f x -> x) f x)
+  =b> \f x -> f ((\x -> x) x)
+  =b> \f x -> f x
   =d> ONE
 
 eval add_one_two :
-  ADD ONE TWO 
-  -- (c) fill in your reductions here
+  ADD ONE TWO
+  =d> (\n m -> n INCR m) ONE TWO
+  =b> (\m -> ONE INCR m) TWO
+  =b> ONE INCR TWO
+  =d> (\f x -> f x) INCR TWO
+  =b> (\x -> INCR x) TWO
+  =b> INCR TWO
+  =d> (\n f x -> f (n f x)) TWO
+  =b> \f x -> f (TWO f x)
+  =d> \f x -> f ((\f x -> f (f x)) f x)
+  =a> \f x -> f ((\g y -> g (g y)) f x)
+  =b> \f x -> f ((\y -> f (f y)) x)
+  =b> \f x -> f (f (f x))
   =d> THREE
